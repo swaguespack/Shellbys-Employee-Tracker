@@ -45,7 +45,7 @@ const selectOption = () => {
         ]
     })
     .then((option) => {
-        switch(option){
+        switch(option.option){
             case "View All Departments":
             viewDepartments();
             break;
@@ -132,7 +132,7 @@ function viewRoles() {
     `SELECT r.id, r.title, r.salary, d.name AS department
     FROM roles r
     LEFT JOIN department d
-    ON d.id = r.department_id`
+        ON d.id = r.department_id`
   
     db.query(query, function (err, res) {
       if (err) throw err;
@@ -150,11 +150,11 @@ function viewEmployees() {
     `SELECT e.id, e.first_name, e.last_name, r.title, d.name AS department, r.salary, CONCAT(m.first_name, ' ', m.last_name) AS manager
     FROM employees e
     LEFT JOIN roles r
-    ON e.roles_id = r.id
+        ON e.role_id = r.id
     LEFT JOIN department d
-    ON d.id = r.department_id
+        ON d.id = r.department_id
     LEFT JOIN employees m
-    ON m.id = e.manager_id`
+        ON m.id = e.manager_id`
   
     db.query(query, function (err, res) {
       if (err) throw err;

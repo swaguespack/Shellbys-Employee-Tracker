@@ -5,21 +5,21 @@ CREATE DATABASE company_db;
 USE company_db;
 
 CREATE TABLE employees (
-  id INT PRIMARY KEY,
+  id INTEGER AUTO_INCREMENT PRIMARY KEY,
   first_name VARCHAR(30) NOT NULL,
   last_name VARCHAR(30) NOT NULL,
-  role_id INT,
-  manager_id INT NULL
+  role_id INTEGER NULL,
+  manager_id INTEGER NULL
 );
 
 CREATE TABLE department (
-  id INT PRIMARY KEY,
-  name VARCHAR(30) 
+  id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(30) NULL
 );
 
 CREATE TABLE roles (
-  id INT PRIMARY KEY,
-  title VARCHAR(30) UNIQUE NOT NULL,
-  salary DECIMAL,
-  department_id INT
+  id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(30) NULL,
+  salary DECIMAL(10.3) NULL,
+  department_id INTEGER NULL
 );

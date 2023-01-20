@@ -4,11 +4,21 @@ const inquirer = require('inquirer');
 const cTable = require('console.table');
 
 //Connect to database
-const db =mysql2.createConnection({
+const db = mysql2.createConnection({
     host: "localhost",
-    user: process.env.DB_USER,
-    password: process.env.DB_PW,
-    database: process.env.DB_NAME
+    user: 'root',
+    password: '',
+    database: 'company_db'
 },
 console.log("Connected to the company database.")
 );
+
+connection.connect(function(err){
+    if (err) throw err;
+    console.log(" EMPLOYEE MANAGER")
+    firstPrompt();
+});
+
+function firstPrompt(){
+    
+}

@@ -390,7 +390,7 @@ deleteEmployee = () => {
           })
   }
 
-  //Delete Employee
+  //Delete Department
 deleteDept = () => {
     db.query( `SELECT * FROM department ORDER BY id ASC;`, (err,res) =>{
           if(err) throw err;

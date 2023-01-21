@@ -185,7 +185,7 @@ addDept = () => {
                 if (err) throw err;
                 console.table(res)
 
-                console.log(`${answer.deptName} added successfully to departments.\n`)
+                console.log(`${answer.deptName} added successfully to Departments.\n`)
                 selectOption();
         });
     });
@@ -219,7 +219,7 @@ addRole = () => {
         {
             type: 'list',
             name:'departmentID',
-            message: 'Enter Role Department',
+            message: 'Select Role Department',
             choices: departmentChoices
         },
     ])
@@ -235,13 +235,75 @@ addRole = () => {
             if (err) throw err;
             console.table(res)
 
-            console.log(`${answer.roleTitle} added successfully to roles.\n`)
+            console.log(`${answer.roleTitle} added successfully to Roles.\n`)
             selectOption();
          });
 
     });
   }
 
+//Add Employee
+addEmployee = () => { 
+  
+    db.query(`SELECT * FROM employees;`, (err, res) => {
+      if (err) throw err;
+      
+      const roleChoices = res.map(({id,role_id}) => ({
+        value: id, name: `${role_id}`
+      }));
 
+      const managerChoices = res.map(({id,manager_id}) => ({
+        vale: id, name: `${manager_id}`
+      }));
+
+      console.table(res);
+      promptAddEmployee(roleChoices,managerChoices)
+    });
+  }
+
+  promptAddEmployee = (roleChoices,managerChoices) =>{
+    inquirer.prompt([
+        {
+            type: 'input',
+            name:'firstName',
+            message: 'Enter Employee First Name'
+        },
+        {
+            type: 'input',
+            name:'lastName',
+            message: 'Enter Employee Last Name' 
+        },
+        {
+            type: 'list',
+            name:'roleID',
+            message: 'Select Employee Role',
+            choices: roleChoices
+        },
+        {
+            type: 'list',
+            name:'managerID',
+            message: 'Select Employee Manager',
+            choices: managerChoices
+        },
+    ])
+    .then((answer) => {
+        let query = `INSERT INTO employees SET ?`
+
+        db.query(query,{
+            first_name: answer.firstName,
+            last_name: answer.lastName,
+            role_id: answer.roleID,
+            manager_id: answer.managerID
+        },
+        (err, res) => {
+            if (err) throw err;
+            console.table(res)
+
+            console.log(`${answer.firstName} added successfully to Employees.\n`)
+            selectOption();
+         });
+
+    });
+  }
     
 

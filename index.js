@@ -355,9 +355,65 @@ deleteRole = () => {
             ],
             (err,res) => {
                 if(err) throw err;
-                console.log(`\n Role Successfully Removed!`)
+                console.log(res.affectedRows + `\n Role Successfully Removed!`)
                 selectOption();
             })
         })
         })
 }
+
+//Delete Employee
+deleteEmployee = () => {
+    db.query( `SELECT * FROM employees ORDER BY id ASC;`, (err,res) =>{
+          if(err) throw err;
+          let employees = res.map(({id,first_name,last_name}) => ({value:id, name:`${first_name} ${last_name}`}));
+          inquirer.prompt([
+              {
+                  name: 'employeeID',
+                  type:'list',
+                  message: 'Select the employee you would like to delete.',
+                  choices: employees
+              },
+          ]) .then((answer) => {
+              db.query(`DELETE FROM employees WHERE ?`,
+              [
+                  {
+                      id: answer.employeeID,
+                  },
+              ],
+              (err,res) => {
+                  if(err) throw err;
+                  console.log(res.affectedRows + `\n  Successfully Removed!`)
+                  selectOption();
+              })
+          })
+          })
+  }
+
+  //Delete Employee
+deleteDept = () => {
+    db.query( `SELECT * FROM department ORDER BY id ASC;`, (err,res) =>{
+          if(err) throw err;
+          let departments = res.map(({id,name}) => ({value:id, name:`${name}`}));
+          inquirer.prompt([
+              {
+                  name: 'deptID',
+                  type:'list',
+                  message: 'Select the department you would like to delete.',
+                  choices: departments
+              },
+          ]) .then((answer) => {
+              db.query(`DELETE FROM department WHERE ?`,
+              [
+                  {
+                      id: answer.deptID,
+                  },
+              ],
+              (err,res) => {
+                  if(err) throw err;
+                  console.log(res.affectedRows + `\n  Successfully Removed!`)
+                  selectOption();
+              })
+          })
+          })
+  }

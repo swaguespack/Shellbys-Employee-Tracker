@@ -164,5 +164,35 @@ viewEmployees = () => {
       selectOption();
     });
   }
+
+  //Add Department
+addDept = () => {
+    
+    inquirer.prompt([
+            {
+                name: 'deptName',
+                type: 'input',
+                message: 'What is the name of your new department?'
+            },
+        ])
+        .then((answer) => {
+            console.log(answer);
+            db.query(`INSERT INTO department SET ?`,
+            {
+                name: answer.deptName
+            }, 
+            (err, res) => {
+                if (err) throw err;
+                console.table(res)
+
+                console.log(`${answer.deptName} added successfully to departments.\n`)
+                selectOption();
+        });
+    });
+}
+
+
+
+
     
 

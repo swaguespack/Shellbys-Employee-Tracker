@@ -61,15 +61,15 @@ const selectOption = () => {
             viewEmployees();
             break;
 
-            case "View Employees by Manager":
+            case "View Employees by Manager"://Bonus
             viewEmployeeByManager();
             break;
 
-            case "View Employees by Department":
+            case "View Employees by Department"://Bonus
             viewEmployeesByDept();
              break;
 
-            case "View Budget by Department":
+            case "View Budget by Department"://Bonus
             viewDeptBudget();
             break;
 
@@ -89,19 +89,19 @@ const selectOption = () => {
             updateEmployeeRole();
             break;
 
-            case "Update Employee Manager":
+            case "Update Employee Manager"://Bonus
             updateEmployeeManager();
             break;
 
-            case "Delete Role":
+            case "Delete Role": //Bonus
             deleteRole();
              break;
 
-            case "Delete Employee":
+            case "Delete Employee": //Bonus
             deleteEmployee();
             break;
     
-            case "Delete Department":
+            case "Delete Department": //Bonus
             deleteDept();
             break;
 
@@ -243,7 +243,56 @@ addRole = () => {
   }
 
 //Add Employee
-addEmployee = () => { 
+addEmployee = () => {
+    db.query(`SELECT * FROM roles;`, (err, res) => {
+        if (err) throw err;
+        let roleChoices = res.map(({id,title}) => ({name: `${title}`, value: id }));
+        db.query(`SELECT * FROM employees;`, (err, res) => {
+            if (err) throw err;
+            let managerChoices = res.map(({id,first_name,last_name}) => ({name: `${first_name} ${last_name}`, value: id}));
+            inquirer.prompt([
+                {
+                    name: 'firstName',
+                    type: 'input',
+                    message: 'Enter Employee First Name'
+                },
+                {
+                    name: 'lastName',
+                    type: 'input',
+                    message: 'Enter Employee Last Name'
+                },
+                {
+                    name: 'role',
+                    type: 'rawlist',
+                    message: 'Select Employee Title.',
+                    choices: roleChoices
+                },
+                {
+                    name: 'manager',
+                    type: 'rawlist',
+                    message: 'Select Employee Manager.',
+                    choices: managerChoices
+                }
+            ]).then((answer) => {
+                db.query(`INSERT INTO employees SET ?`, 
+                {
+                    first_name: answer.firstName,
+                    last_name: answer.lastName,
+                    role_id: answer.role,
+                    manager_id: answer.manager,
+                }, 
+                (err, res) => {
+                    if (err) throw err;
+                    
+                    console.table(res)
+                    console.log(`\n ${answer.firstName} ${answer.lastName} successfully added to Employees! \n`);
+                    selectOption();
+                })
+            })
+        })
+    })
+};
+/*addEmployee = () => { 
   
     db.query(`SELECT * FROM employees;`, (err, res) => {
       if (err) throw err;
@@ -304,6 +353,7 @@ addEmployee = () => {
          });
 
     });
-  }
+  }*/
     
+//Update Employee Role
 

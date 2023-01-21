@@ -191,8 +191,47 @@ addDept = () => {
     });
 }
 
+//Add Role
+  addRole = (departmentChoices) =>{
+    inquirer.prompt([
+        {
+            type: 'input',
+            name:'roleTitle',
+            message: 'Enter Role Title'
+        },
+        {
+            type: 'input',
+            name:'roleSalary',
+            message: 'Enter Role Salary' 
+        },
+        {
+            type: 'list',
+            name:'departmentID',
+            message: 'Enter Role Department',
+            choices: departmentChoices
+        },
+    ])
+    .then((answer) => {
+        let query = `INSERT INTO roles SET ?`
 
+        db.query(query,{
+            title: answer.roleTitle,
+            salary: answer.roleSalary,
+            department_id: answer.departmentID
+        },
+        (err, res) => {
+            if (err) throw err;
+            console.table(res)
 
+            console.log(`${answer.roleTitle} added successfully to roles.\n`)
+            selectOption();
+         });
+
+    });
+  }
+
+  //Add Employee
+  
 
     
 

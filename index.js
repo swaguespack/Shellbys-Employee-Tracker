@@ -43,7 +43,7 @@ const selectOption = () => {
             "Delete Role",
             "Delete Employee",
             "Delete Department",
-            "End"
+            "Exit"
         ]
     })
     //Allows user to arrow through options to select from
@@ -105,7 +105,7 @@ const selectOption = () => {
             deleteDept();
             break;
 
-            case "End":
+            case "Exit":
             db.end();
             break;
         }
@@ -192,7 +192,19 @@ addDept = () => {
 }
 
 //Add Role
-  addRole = (departmentChoices) =>{
+addRole = () => { 
+  
+    db.query(`SELECT * FROM department;`, (err, res) => {
+      if (err) throw err;
+      
+      const departmentChoices = res.map(({id,name}) => ({
+        value: id, name: `${id} ${name}`
+      }));
+      promptAddRole(departmentChoices)
+    });
+  }
+
+  promptAddRole = (departmentChoices) =>{
     inquirer.prompt([
         {
             type: 'input',
@@ -230,8 +242,6 @@ addDept = () => {
     });
   }
 
-  //Add Employee
-  
 
     
 

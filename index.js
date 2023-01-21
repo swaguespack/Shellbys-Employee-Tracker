@@ -11,7 +11,7 @@ const db = mysql2.createConnection({
     password: 'Monty-4169',
     database: 'company_db'
 },
-//console.log("Connected to the company database.")
+
 );
 
 db.connect(function(err){

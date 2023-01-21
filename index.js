@@ -333,3 +333,31 @@ updateEmployeeRole = () => {
         })
     })
 };
+
+//Delete Role
+deleteRole = () => {
+  db.query( `SELECT * FROM roles ORDER BY id ASC;`, (err,res) =>{
+        if(err) throw err;
+        let roles = res.map(({id,title}) => ({value:id, name:`${title}`}));
+        inquirer.prompt([
+            {
+                name: 'title',
+                type:'list',
+                message: 'Select the role you would like to delete.',
+                choices: roles
+            },
+        ]) .then((answer) => {
+            db.query(`DELETE FROM roles WHERE ?`,
+            [
+                {
+                    id: answer.title,
+                },
+            ],
+            (err,res) => {
+                if(err) throw err;
+                console.log(`\n Role Successfully Removed!`)
+                selectOption();
+            })
+        })
+        })
+}

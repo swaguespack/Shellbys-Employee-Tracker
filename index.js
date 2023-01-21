@@ -294,4 +294,42 @@ addEmployee = () => {
 };
 
 //Update Employee Role
+updateEmployeeRole = () => {
+    db.query(`SELECT * FROM roles;`, (err, res) => {
+        if (err) throw err;
+        let roleChoices = res.map(({id,title}) => ({name: `${title}`, value: id }));
+        db.query(`SELECT * FROM employees;`, (err, res) => {
+            if (err) throw err;
+            let employeeChoices = res.map(({id,first_name,last_name}) => ({name: `${first_name} ${last_name}`, value: id}));
+            inquirer.prompt([
 
+                {
+                    name: 'employee',
+                    type: 'list',
+                    message: 'Select Employee.',
+                    choices: employeeChoices
+                },
+                {
+                    name: 'newRole',
+                    type: 'list',
+                    message: 'Select Employee Title.',
+                    choices: roleChoices
+                }
+            ]).then((answer) => {
+                db.query(`UPDATE employees SET role_id = ? WHERE id = ?`, 
+                [
+                    answer.newRole, 
+                    answer.employee
+                ],
+
+                (err, res) => {
+                    if (err) throw err;
+
+                    console.table(res)
+                    console.log(`Successfully updated Employee's Role! \n`);
+                    selectOption();
+                })
+            })
+        })
+    })
+};

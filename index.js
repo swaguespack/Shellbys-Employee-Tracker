@@ -263,13 +263,13 @@ addEmployee = () => {
                 },
                 {
                     name: 'role',
-                    type: 'rawlist',
+                    type: 'list',
                     message: 'Select Employee Title.',
                     choices: roleChoices
                 },
                 {
                     name: 'manager',
-                    type: 'rawlist',
+                    type: 'list',
                     message: 'Select Employee Manager.',
                     choices: managerChoices
                 }
@@ -283,7 +283,7 @@ addEmployee = () => {
                 }, 
                 (err, res) => {
                     if (err) throw err;
-                    
+
                     console.table(res)
                     console.log(`\n ${answer.firstName} ${answer.lastName} successfully added to Employees! \n`);
                     selectOption();
@@ -292,68 +292,6 @@ addEmployee = () => {
         })
     })
 };
-/*addEmployee = () => { 
-  
-    db.query(`SELECT * FROM employees;`, (err, res) => {
-      if (err) throw err;
-      
-      const roleChoices = res.map(({id,role_id}) => ({
-        value: id, name: `${role_id}`
-      }));
 
-      const managerChoices = res.map(({id,manager_id}) => ({
-        vale: id, name: `${manager_id}`
-      }));
-
-      console.table(res);
-      promptAddEmployee(roleChoices,managerChoices)
-    });
-  }
-
-  promptAddEmployee = (roleChoices,managerChoices) =>{
-    inquirer.prompt([
-        {
-            type: 'input',
-            name:'firstName',
-            message: 'Enter Employee First Name'
-        },
-        {
-            type: 'input',
-            name:'lastName',
-            message: 'Enter Employee Last Name' 
-        },
-        {
-            type: 'list',
-            name:'roleID',
-            message: 'Select Employee Role',
-            choices: roleChoices
-        },
-        {
-            type: 'list',
-            name:'managerID',
-            message: 'Select Employee Manager',
-            choices: managerChoices
-        },
-    ])
-    .then((answer) => {
-        let query = `INSERT INTO employees SET ?`
-
-        db.query(query,{
-            first_name: answer.firstName,
-            last_name: answer.lastName,
-            role_id: answer.roleID,
-            manager_id: answer.managerID
-        },
-        (err, res) => {
-            if (err) throw err;
-            console.table(res)
-
-            console.log(`${answer.firstName} added successfully to Employees.\n`)
-            selectOption();
-         });
-
-    });
-  }*/
-    
 //Update Employee Role
 

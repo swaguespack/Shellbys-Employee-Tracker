@@ -41,14 +41,10 @@ const selectOption = () => {
             "View All Departments",
             "View All Roles",
             "View All Employees",
-            "View Employees by Manager",
-            "View Employees by Department",
-            "View Budget by Department",
             "Add Deparment",
             "Add Role",
             "Add Employee",
             "Update Employee Role",
-            "Update Employee Manager",
             "Delete Role",
             "Delete Employee",
             "Delete Department",
@@ -70,18 +66,6 @@ const selectOption = () => {
             viewEmployees();
             break;
 
-            case "View Employees by Manager"://Bonus
-            viewEmployeeByManager();
-            break;
-
-            case "View Employees by Department"://Bonus
-            viewEmployeesByDept();
-             break;
-
-            case "View Budget by Department"://Bonus
-            viewDeptBudget();
-            break;
-
             case "Add Deparment":
             addDept();
             break;
@@ -96,10 +80,6 @@ const selectOption = () => {
     
             case "Update Employee Role":
             updateEmployeeRole();
-            break;
-
-            case "Update Employee Manager"://Bonus
-            updateEmployeeManager();
             break;
 
             case "Delete Role": //Bonus
